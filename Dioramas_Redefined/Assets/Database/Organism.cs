@@ -46,14 +46,14 @@ public class Organism {
 
 
     // Getters
-    Classification GetClassification() { return classification; }
-    string GetName() { return name; }
-    string GetLatinName() { return latinName; }
-    string GetHabitat() { return habitat; }
-    string GetInTheScene() { return inTheScene; }
-    string GetDidYouKnow() { return didYouKnow; }
-    string GetFamily() { return family; }
-    Texture2D GetDistribution() { return distribution; }
-    Texture2D GetImage() { return image; }
+    public Classification GetClassification() { return classification; }
+    public string GetName() { return name; }
+    public string GetLatinName() { return latinName; }
+    public string GetHabitat() { return habitat; }
+    public string GetInTheScene() { return inTheScene; }
+    public string GetDidYouKnow() { return didYouKnow; }
+    public string GetFamily() { return family; }
+    public Texture2D GetDistribution() { return distribution; }
+    public Texture2D GetImage() { return image; }
 
 }
