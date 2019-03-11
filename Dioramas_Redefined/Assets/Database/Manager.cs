@@ -8,10 +8,13 @@ public class Manager : MonoBehaviour
     void Start() {
         string data = "Bell_Dioramas_Touchscreen_FieldGuides_FINAL_CRiver-BigWoods_only.csv";
         string classification = "classifications.txt";
-        Diorama diorama = 
-            Parse.ParseCSV(
-                Application.streamingAssetsPath + "/" + data, 
-                Application.streamingAssetsPath + "/" + classification);
+
+        Diorama diorama = gameObject.AddComponent<Diorama>();
+
+        Parse.ParseCSV(
+            ref diorama,
+            Application.streamingAssetsPath + "/" + data, 
+            Application.streamingAssetsPath + "/" + classification);
         
     }
 

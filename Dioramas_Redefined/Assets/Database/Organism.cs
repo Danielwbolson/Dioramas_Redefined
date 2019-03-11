@@ -12,6 +12,7 @@ public enum Classification {
     plant
 }
 
+[System.Serializable]
 public class Organism {
 
     public Organism() { }
@@ -33,15 +34,23 @@ public class Organism {
     // Variables
     public Classification classification;
 
+    [SerializeField]
     private string name;
+    [SerializeField]
     private string latinName;
 
+    [SerializeField]
     private string habitat;
+    [SerializeField]
     private string inTheScene;
+    [SerializeField]
     private string didYouKnow;
+    [SerializeField]
     private string family;
 
+    [SerializeField]
     private Texture2D distribution;
+    [SerializeField]
     private Texture2D image;
 
 

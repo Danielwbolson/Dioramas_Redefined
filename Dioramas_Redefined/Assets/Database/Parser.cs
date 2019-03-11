@@ -6,9 +6,9 @@ public static class Parse {
 
     /*
      * Parses CSV file delimmited by ~ and puts it in a Diorama object
+     * Then matches each organism with their classification to allow sorting later
      */
-    public static Diorama ParseCSV(string data, string classification) {
-        Diorama d = new Diorama();
+    public static void ParseCSV(ref Diorama d, string data, string classification) {
 
         string[] fileData = System.IO.File.ReadAllLines(data);
 
@@ -65,7 +65,6 @@ public static class Parse {
 
             }
 
-            //Organism o = new Organism(name, latinName, habitat, inTheScene, didYouKnow, family, distribution, img);
         }
 
         // Setting classifications of each Organism for future sorting
@@ -140,6 +139,5 @@ public static class Parse {
                 }
             }
         }
-        return d;
     }
 }
