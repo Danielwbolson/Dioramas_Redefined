@@ -23,6 +23,7 @@ public static class Parse {
 
             string s = fileData[i];
 
+            // ~ is the delimitter, if we run into one by itself, we are starting a new Organism
             if (s == "~" || s.Length == 0) {
 
                 // Every organism has a name, so we will use this to determine if we have a new organism
@@ -36,10 +37,8 @@ public static class Parse {
 
             string[] lineData = s.Trim().Split('~');
 
-
             // Text parsing for each category of an Organism
             if (lineData[0].Contains("Name:")) {
-
                 // Get regular name
                 name = lineData[1].Substring(1, lineData[1].Length - 1);
 
@@ -48,26 +47,25 @@ public static class Parse {
                 latinName = nextS.Substring(0, nextS.Length - 1);
 
             } else if (lineData[0].Contains("Habitat:")) {
-
                 habitat = lineData[1];
 
             } else if (lineData[0].Contains("In the scene:")) {
-
                 inTheScene = lineData[1];
 
             } else if (lineData[0].Contains("Did you know?:")) {
-
                 didYouKnow = lineData[1];
 
             } else if (s.Contains("Classification:")) {
-
                 family = lineData[1];
-
             }
 
         }
 
-        // Setting classifications of each Organism for future sorting
+
+        /* 
+         * Setting classifications of each Organism for future sorting
+         */
+
         string[] classData = System.IO.File.ReadAllLines(classification);
         Classification curr = 0;
 
