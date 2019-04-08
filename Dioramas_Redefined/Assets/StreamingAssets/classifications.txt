@@ -15,9 +15,9 @@ Blue-Gray Gnatcatcher 07510
 Blue-Winged Warbler 06410
 Red-Bellied Woodpecker 04090
 
-Pileated Woodpecker
+Pileated Woodpecker 04050
 
-Great Blue Heron 01920
+Great Blue Heron 01940
 
 Cerulean Warbler 06580
 
@@ -32,8 +32,8 @@ Mourning Cloak Butterfly
 PLANTS
 
 TREES
-Basswood 2109
-Pagoda Dogwood 617
+Basswood
+Pagoda Dogwood
 Sugar Maple 
 Ironwood
 

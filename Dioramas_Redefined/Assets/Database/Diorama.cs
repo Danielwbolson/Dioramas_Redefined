@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Diorama : MonoBehaviour{
+public class Diorama : MonoBehaviour {
 
     public Diorama() {
         organisms = new List<Organism>();

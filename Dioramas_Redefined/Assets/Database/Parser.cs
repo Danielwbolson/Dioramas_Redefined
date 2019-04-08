@@ -170,7 +170,7 @@ public static class Parse {
 
                         // It did not have existing data, so we add it
                         d.organisms[k].data.Add(p);
-                    } else {
+                    } else if (d.organisms[k].classification == Classification.bird) {
 
                         // The data already existed, so now we increment
                         int totalCounts = p.count + d.organisms[k].data[index].count;
