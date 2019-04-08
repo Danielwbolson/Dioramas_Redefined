@@ -95,13 +95,12 @@ public static class Parse {
 
             // Get our chunks of what to check against for determining class
             string[] lineChunks = lineData.Split(' ');
-            int uselessNumber;
 
             // Run through organisms and set their Classifications
             for (int k = 0; k < d.organisms.Count; k++) {
 
                 // If our last part is a number
-                if (int.TryParse(lineChunks[lineChunks.Length-1], out uselessNumber)) {
+                if (int.TryParse(lineChunks[lineChunks.Length-1], out int aou)) {
 
                     // Run through and see if all chunks are a part of the name. If any aren't, break out with a false flag
                     bool rightClass = true;
@@ -115,7 +114,9 @@ public static class Parse {
                     // If we have the right class, this will still be true
                     if (rightClass) {
                         // If we made it here, our animal had a number at the end but we matched it anyways
+                        // The number at the end was it's aou number, which is useful for other data
                         d.organisms[k].classification = curr;
+                        d.organisms[k].aou = aou;
                     }
 
                 } else { // No number
@@ -136,6 +137,58 @@ public static class Parse {
                     }
                 }
             }
+        }
+    }
+
+    /* Runs through our data from BBS and determines counts of birds over
+     * years and routes
+     */
+    public static void ParseBBSData(ref Diorama d, string filepath) {
+        string[] fileData = System.IO.File.ReadAllLines(filepath);
+
+        // First line is text, so start on second
+        for (int i = 1; i < fileData.Length; i++) {
+            string s = fileData[i];
+
+            string[] lineData = s.Trim().Split(',');
+
+            int aou = int.Parse(lineData[4]);
+            populationData p = new populationData {
+                year = int.Parse(lineData[3]),
+                numRoutes = 1,
+                count = int.Parse(lineData[5])
+            };
+
+            // Find the animal with the matching aou so we can add data to it
+            for (int k = 0; k < d.organisms.Count; k++) {
+                if (d.organisms[k].aou == aou) {
+
+                    // We have found the matching animal, now we need to see if it
+                    // already has data for the year we are on
+                    int index = d.organisms[k].data.FindIndex(data => data.year == p.year);
+                    if (index == -1) {
+
+                        // It did not have existing data, so we add it
+                        d.organisms[k].data.Add(p);
+                    } else {
+
+                        // The data already existed, so now we increment
+                        int totalCounts = p.count + d.organisms[k].data[index].count;
+                        int totalRoutes = d.organisms[k].data[index].numRoutes + 1;
+                        d.organisms[k].data[index] = new populationData {
+                            year = p.year,
+                            numRoutes = totalRoutes,
+                            count = totalCounts
+                        };
+
+                    }
+                }
+            }
+        }
+
+        // Now that all data is stored in birds, sort them so they are sequential
+        for (int i = 0; i < d.organisms.Count; i++) {
+            d.organisms[i].data.Sort((d1, d2) => d1.year.CompareTo(d2.year));
         }
     }
 }
