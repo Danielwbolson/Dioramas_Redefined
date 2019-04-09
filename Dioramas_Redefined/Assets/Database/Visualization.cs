@@ -53,7 +53,7 @@ public class Visualization : MonoBehaviour {
 
             List<Vector3> points = new List<Vector3>();
             for (int i = 0; i < b.years.Count; i++) {
-                points.Add(new Vector3(b.years[i] % 1967, b.extrapolatedCount[i], 10));
+                points.Add(new Vector3((b.years[i] % 1967) / 2.21f + 27.1f, b.extrapolatedCount[i], 10));
             }
 
             lr.material = new Material(Shader.Find("Sprites/Default"));

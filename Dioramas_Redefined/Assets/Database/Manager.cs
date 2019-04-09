@@ -32,14 +32,17 @@ public class Manager : MonoBehaviour
 
         active = new List<bool>();
         for (int i = 0; i < lrs.Count; i++) {
-            active.Add(true);
+            if (i == 8 || i == 11 || i >= 18)
+                active.Add(true);
+            else
+                active.Add(false);
         }
         
     }
 
     private void Update() {
         for (int i = 0; i < lrs.Count; i++) {
-            lrs[i].enabled = active[i];
+             lrs[i].enabled = active[i];
         }
     }
 
