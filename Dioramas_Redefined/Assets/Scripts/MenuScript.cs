@@ -9,6 +9,8 @@ public class MenuScript : MonoBehaviour
     public void Awake()
     {
         PopUpWindow = GameObject.FindWithTag("PopUp");
+        PopUpWindow.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+
     }
 
     public void ChangeScene(string sceneName)
@@ -20,7 +22,9 @@ public class MenuScript : MonoBehaviour
     {
 
         //PopUpWindow = GameObject.FindWithTag("PopUp");
-        PopUpWindow.SetActive(!PopUpWindow.activeInHierarchy);
+        //PopUpWindow.SetActive(true);
+
+        PopUpWindow.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 
         if (PopUpWindow.activeSelf)
         {
@@ -44,6 +48,11 @@ public class MenuScript : MonoBehaviour
             popup_info = (Text)GameObject.Find("Family").GetComponent<Text>();
             popup_info.text = dio.organisms[index].GetFamily();
         }
+    }
 
+    public void CloseWindow()
+    {
+        PopUpWindow.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+        //PopUpWindow.SetActive(false);
     }
 }
