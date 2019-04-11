@@ -31,22 +31,22 @@ public class MenuScript : MonoBehaviour
             Diorama dio = GameObject.FindObjectOfType<Diorama>();
             //Debug.Log(dio.organisms[index].GetName());
             Text popup_info = (Text)GameObject.Find("Name").GetComponent<Text>();
-            popup_info.text = dio.organisms[index].GetName();
+            popup_info.text = "Name: " + dio.organisms[index].GetName();
 
             popup_info = (Text)GameObject.Find("Latin Name").GetComponent<Text>();
-            popup_info.text = dio.organisms[index].GetLatinName();
+            popup_info.text = "Latin Name: " + dio.organisms[index].GetLatinName();
 
             popup_info = (Text)GameObject.Find("Habitat").GetComponent<Text>();
-            popup_info.text = dio.organisms[index].GetHabitat();
+            popup_info.text = "Habitat: " + dio.organisms[index].GetHabitat();
 
             popup_info = (Text)GameObject.Find("In The Scene").GetComponent<Text>();
-            popup_info.text = dio.organisms[index].GetInTheScene();
+            popup_info.text = "In the Scene: " + dio.organisms[index].GetInTheScene();
 
             popup_info = (Text)GameObject.Find("Did You Know").GetComponent<Text>();
-            popup_info.text = dio.organisms[index].GetDidYouKnow();
+            popup_info.text = "Did You Know?: " + dio.organisms[index].GetDidYouKnow();
 
             popup_info = (Text)GameObject.Find("Family").GetComponent<Text>();
-            popup_info.text = dio.organisms[index].GetFamily();
+            popup_info.text = "Family: " + dio.organisms[index].GetFamily();
         }
     }
 
