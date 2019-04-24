@@ -65,7 +65,6 @@ public static class Parse {
         /* 
          * Setting classifications of each Organism for future sorting
          */
-
         string[] classData = System.IO.File.ReadAllLines(classification);
         Classification curr = 0;
 
@@ -146,14 +145,37 @@ public static class Parse {
     public static void ParseBBSData(ref Diorama d, string filepath) {
         string[] fileData = System.IO.File.ReadAllLines(filepath);
 
+        List<populationDataByRoute> routes = new List<populationDataByRoute>();
+        int index;
+
+        // Deep copy of organisms
+        List<Organism> copyOfOrganisms = new List<Organism>();
+        for (int i = 0; i < d.organisms.Count; i++) {
+            copyOfOrganisms.Add(d.organisms[i].Clone());
+        }
+
         // First line is text, so start on second
         for (int i = 1; i < fileData.Length; i++) {
             string s = fileData[i];
 
             string[] lineData = s.Trim().Split(',');
 
+            // If we have no info on this route, add it to our list
+            string routeId = lineData[2];
+
+            // Get a Deep Copy of our static info
+            List<Organism> currClone = new List<Organism>();
+            for (int j = 0; j < copyOfOrganisms.Count; j++) {
+                currClone.Add(copyOfOrganisms[j].Clone());
+            }
+            populationDataByRoute r = new populationDataByRoute {
+                routeID = routeId,
+                organisms = currClone
+            };
+
+            // Get our current species info
             int aou = int.Parse(lineData[4]);
-            populationData p = new populationData {
+            populationDataByYear p = new populationDataByYear {
                 year = int.Parse(lineData[3]),
                 numRoutes = 1,
                 count = int.Parse(lineData[5])
@@ -165,7 +187,7 @@ public static class Parse {
 
                     // We have found the matching animal, now we need to see if it
                     // already has data for the year we are on
-                    int index = d.organisms[k].data.FindIndex(data => data.year == p.year);
+                    index = d.organisms[k].data.FindIndex(data => data.year == p.year);
                     if (index == -1) {
 
                         // It did not have existing data, so we add it
@@ -175,7 +197,7 @@ public static class Parse {
                         // The data already existed, so now we increment
                         int totalCounts = p.count + d.organisms[k].data[index].count;
                         int totalRoutes = d.organisms[k].data[index].numRoutes + 1;
-                        d.organisms[k].data[index] = new populationData {
+                        d.organisms[k].data[index] = new populationDataByYear {
                             year = p.year,
                             numRoutes = totalRoutes,
                             count = totalCounts
@@ -184,11 +206,44 @@ public static class Parse {
                     }
                 }
             }
+
+            // See if we already have this route number, if not add it
+            index = routes.FindIndex(route => string.Compare(route.routeID, routeId) == 0);
+            if (index == -1) {
+                routes.Add(r.Clone());
+                index = routes.Count - 1;
+            }
+
+            // Get a reference to our routes data
+            List<Organism> o = routes[index].organisms;
+            int organismIndex = o.FindIndex(organism => organism.GetAOU() == aou);
+            if (o[organismIndex].classification == Classification.bird) {
+
+                // Add data on this bird for our route
+                index = o[organismIndex].data.FindIndex(data => data.year == p.year);
+                if (index == -1) {
+
+                    // It did not have existing data, so we add it
+                    o[organismIndex].data.Add(p);
+                } else { 
+                    // The data already existed, so now we increment
+                    int totalCounts = p.count + o[organismIndex].data[index].count;
+                    int totalRoutes = o[organismIndex].data[index].numRoutes + 1;
+                    o[organismIndex].data[index] = new populationDataByYear {
+                        year = p.year,
+                        numRoutes = totalRoutes,
+                        count = totalCounts
+                    };
+
+                }
+            }
         }
 
         // Now that all data is stored in birds, sort them so they are sequential
         for (int i = 0; i < d.organisms.Count; i++) {
             d.organisms[i].data.Sort((d1, d2) => d1.year.CompareTo(d2.year));
         }
+
+        d.popByRoute = routes;
     }
 }

@@ -13,13 +13,6 @@ public enum Classification {
 }
 
 [System.Serializable]
-public struct populationData {
-    public int year;
-    public int numRoutes;
-    public int count;
-}
-
-[System.Serializable]
 public class Organism {
 
     public Organism() { }
@@ -36,14 +29,39 @@ public class Organism {
         distribution = distr;
         image = img;
 
-        data = new List<populationData>();
+        data = new List<populationDataByYear>();
+    }
+
+    public Organism Clone() {
+
+        Organism organism =
+            new Organism(
+                this.GetName(),
+                this.GetLatinName(),
+                this.GetHabitat(),
+                this.GetInTheScene(),
+                this.GetDidYouKnow(),
+                this.GetFamily(),
+                this.GetDistribution(),
+                this.GetImage()
+            );
+
+        organism.data = new List<populationDataByYear>();
+        for (int i = 0; i < this.data.Count; i++) {
+            organism.data.Add(this.data[i].Clone());
+        }
+
+        organism.aou = this.aou;
+        organism.classification = this.classification;
+
+        return organism;
     }
 
 
     // Variables
     public Classification classification;
     public int aou;
-    public List<populationData> data;
+    public List<populationDataByYear> data;
 
     [SerializeField]
     private string name;
@@ -73,7 +91,7 @@ public class Organism {
     public string GetInTheScene() { return inTheScene; }
     public string GetDidYouKnow() { return didYouKnow; }
     public string GetFamily() { return family; }
-    public List<populationData> GetPopulationData() { return data; }
+    public List<populationDataByYear> GetPopulationData() { return data; }
     public int GetAOU() { return aou; }
     public Texture2D GetDistribution() { return distribution; }
     public Texture2D GetImage() { return image; }

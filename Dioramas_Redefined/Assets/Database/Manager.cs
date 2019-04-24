@@ -11,6 +11,7 @@ public class Manager : MonoBehaviour
     void Start() {
         string data = "Bell_Dioramas_Touchscreen_FieldGuides_FINAL_CRiver-BigWoods_only.csv";
         string BBSData = "A2286.csv";
+        string RouteData = "I2286.csv";
         string classification = "classifications.txt";
 
         Diorama diorama = gameObject.AddComponent<Diorama>();
@@ -25,6 +26,11 @@ public class Manager : MonoBehaviour
             Application.streamingAssetsPath + "/" + BBSData);
 
         Visualization visualization = gameObject.AddComponent<Visualization>();
+
+        /*
+         * List<Routes> = Parse.ParseRouteData(
+         *          Application.streamingAssetsPath + "/" + RouteData);
+         */
 
         // Visualize all of our population data
         visualization.Visualize(diorama.organisms);
