@@ -39,3 +39,10 @@ public struct populationDataByRoute {
         return p;
     }
 }
+
+[System.Serializable]
+public struct routeData {
+    public string routeID;
+    public float latitude;
+    public float longitude;
+}

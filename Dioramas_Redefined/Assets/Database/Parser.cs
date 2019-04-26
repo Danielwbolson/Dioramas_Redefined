@@ -244,6 +244,40 @@ public static class Parse {
             d.organisms[i].data.Sort((d1, d2) => d1.year.CompareTo(d2.year));
         }
 
+        // Sort our birds by year, per route
+        foreach (populationDataByRoute p in routes) {
+            for (int i = 0; i < p.organisms.Count; i++) {
+                p.organisms[i].data.Sort((d1, d2) => d1.year.CompareTo(d2.year));
+            }
+        }
         d.popByRoute = routes;
+    }
+
+    // Parse our routes and location data into a use able list/struct
+    public static List<routeData> ParseRouteData(string filepath) {
+        string[] fileData = System.IO.File.ReadAllLines(filepath);
+
+        List<routeData> r = new List<routeData>();
+
+        // First line is headers
+        for (int i = 1; i < fileData.Length; i++) {
+            string s = fileData[i];
+
+            string[] lineData = s.Trim().Split(',');
+
+            string rId = lineData[2];
+            float rLatitude = float.Parse(lineData[4]);
+            float rLongitude = float.Parse(lineData[5]);
+
+            routeData route = new routeData {
+                routeID = rId,
+                latitude = rLatitude,
+                longitude = rLongitude
+            };
+
+            r.Add(route);
+        }
+
+        return r;
     }
 }

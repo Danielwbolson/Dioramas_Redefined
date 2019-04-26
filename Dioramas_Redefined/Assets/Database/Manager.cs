@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Manager : MonoBehaviour
-{
+public class Manager : MonoBehaviour {
+
+    public GameObject MNGameObject;
+    public Texture2D MNTexture2D;
+
     public List<bool> active;
-    List<LineRenderer> lrs;
 
     // Start is called before the first frame update
     void Start() {
@@ -18,7 +20,7 @@ public class Manager : MonoBehaviour
 
         Parse.ParseCSV(
             ref diorama,
-            Application.streamingAssetsPath + "/" + data, 
+            Application.streamingAssetsPath + "/" + data,
             Application.streamingAssetsPath + "/" + classification);
 
         Parse.ParseBBSData(
@@ -27,29 +29,31 @@ public class Manager : MonoBehaviour
 
         Visualization visualization = gameObject.AddComponent<Visualization>();
 
-        /*
-         * List<Routes> = Parse.ParseRouteData(
-         *          Application.streamingAssetsPath + "/" + RouteData);
-         */
+         List<routeData> rData = Parse.ParseRouteData(
+             Application.streamingAssetsPath + "/" + RouteData);
+         
 
         // Visualize all of our population data
-        visualization.Visualize(diorama.organisms);
-        lrs = visualization.GetLineRenderers();
+        visualization.Visualize(diorama, ref MNTexture2D, rData);
+
+        // Set our sprite now
+        Rect r = new Rect(0, 0, MNTexture2D.width, MNTexture2D.height);
+        MNGameObject.GetComponent<SpriteRenderer>().sprite = Sprite.Create(MNTexture2D, r, new Vector2(0.5f, 0.5f));
 
         active = new List<bool>();
-        for (int i = 0; i < lrs.Count; i++) {
-            if (i == 8 || i == 11 || i >= 18)
-                active.Add(true);
-            else
-                active.Add(false);
-        }
-        
+        //for (int i = 0; i < lrs.Count; i++) {
+        //    if (i == 8 || i == 11 || i >= 18)
+        //        active.Add(true);
+        //    else
+        //        active.Add(false);
+        //}
+
     }
 
     private void Update() {
-        for (int i = 0; i < lrs.Count; i++) {
-             lrs[i].enabled = active[i];
-        }
+        //for (int i = 0; i < lrs.Count; i++) {
+        //     lrs[i].enabled = active[i];
+        //}
     }
 
 }

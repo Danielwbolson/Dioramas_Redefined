@@ -3,27 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct graph {
+public struct extrapPopDataByYear {
     public string name;
     public List<int> years;
     public List<float> extrapolatedCount;
 }
 
+[System.Serializable]
+public struct extrapPopDataByRoute {
+    public string routeId;
+    public List<extrapPopDataByYear> extrapolatedCount;
+}
+
 public class Visualization : MonoBehaviour {
     [SerializeField]
-    List<graph> birds;
+    List<extrapPopDataByYear> popByYear;
 
-    List<LineRenderer> lrs;
-    public List<LineRenderer> GetLineRenderers() { return lrs; }
+    [SerializeField]
+    List<extrapPopDataByRoute> popByRoute;
+
+    float minLat = 43.5008f;
+    float maxLat = 49.3877f;
+    float minLong = -97.2304f;
+    float maxLong = -89.4919f;
 
     // Start is called before the first frame update
     public Visualization() {
-        birds = new List<graph>();
-        lrs = new List<LineRenderer>();
+        popByYear = new List<extrapPopDataByYear>();
+        popByRoute = new List<extrapPopDataByRoute>();
     }
 
-    public void Visualize(List<Organism> organisms) {
-        foreach (Organism o in organisms) {
+    public void Visualize(Diorama d, ref Texture2D MNTexture2D, List<routeData> rData) {
+
+        // Get our per-year population data
+        foreach (Organism o in d.organisms) {
             List<int> years = new List<int>();
             List<float> extrapolatedCount = new List<float>();
 
@@ -34,39 +47,37 @@ public class Visualization : MonoBehaviour {
 
             if (years.Count > 0) {
 
-                graph b = new graph {
+                extrapPopDataByYear b = new extrapPopDataByYear {
                     name = o.GetName(),
                     years = years,
                     extrapolatedCount = extrapolatedCount
                 };
-                birds.Add(b);
+                popByYear.Add(b);
             }
         }
 
-        foreach (graph b in birds) {
-            // One line renderer per bird, so one gameObject per bird
-            GameObject go = new GameObject(b.name);
-            go.transform.parent = transform;
+        // Change pixel color at each route location
 
-            LineRenderer lr = go.AddComponent<LineRenderer>();
-            Color c = Random.ColorHSV(0, 1, 0, 1, 0, 1, 1, 1);
+        // width is 0 -> MNTexture2D.width
+        // height is 0 -> MNTexture2D.height
 
-            List<Vector3> points = new List<Vector3>();
-            for (int i = 0; i < b.years.Count; i++) {
-                points.Add(new Vector3((b.years[i] % 1967) / 2.21f + 27.1f, b.extrapolatedCount[i], 10));
+        // We need to change:
+        //  (minLong, minLat) to (0,0)
+        //  (maxLong, maxLat) to (width, height)
+        for (int i = 0; i < rData.Count; i++) {
+            int x = ChangeScale_FtoI(0, MNTexture2D.width - 1, minLong, maxLong, rData[i].longitude);
+            int y = ChangeScale_FtoI(0, MNTexture2D.height - 1, minLat, maxLat, rData[i].latitude);
+
+            for (int j = x-1; j < x+2; j++) {
+                for (int k = y-1; k < y+2; k++) {
+                    MNTexture2D.SetPixel(j, k, Color.black);
+                }
             }
-
-            lr.material = new Material(Shader.Find("Sprites/Default"));
-            lr.widthMultiplier = 0.3f;
-
-            lr.positionCount = b.years.Count;
-            lr.SetPositions(points.ToArray());
-            lr.startColor = c;
-            lr.endColor = c;
-
-            lrs.Add(lr);
-
         }
+        MNTexture2D.Apply();
     }
 
+    int ChangeScale_FtoI(int a, int b, float min, float max, float val) {
+        return (int)(((b - a) * (val - min)) / (max - min) + a);
+    }
 }
