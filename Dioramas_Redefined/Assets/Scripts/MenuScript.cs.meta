@@ -3,7 +3,10 @@ guid: 62cd9e2421768d444ae50b680100b410
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - PopUpWindow: {instanceID: 0}
+  - ClearLakePic: {fileID: 21300000, guid: 23c7fc049417f19479aa96e44522e5ae, type: 3}
+  - myImageComponent: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

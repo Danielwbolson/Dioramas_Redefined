@@ -8,9 +8,8 @@ public class MenuScript : MonoBehaviour
 
     public void Awake()
     {
-        PopUpWindow = GameObject.FindWithTag("PopUp");
+        //PopUpWindow = GameObject.FindWithTag("PopUp");
         PopUpWindow.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
-
     }
 
     public void ChangeScene(string sceneName)
