@@ -29,6 +29,26 @@ public class MenuScript : MonoBehaviour
         {
             Diorama dio = GameObject.FindObjectOfType<Diorama>();
             //Debug.Log(dio.organisms[index].GetName());
+
+            string howsItDoingText = "";
+
+            switch (index)
+            {
+                case 9:
+                    howsItDoingText = "Ovenbird Stuff";
+                    break;
+                case 21:
+                    howsItDoingText = "Blue Hero Stuff";
+                    break;
+                case 22:
+                    howsItDoingText = "Cerulean Warbler Stuff";
+                    break;
+                case 23:
+                    howsItDoingText = "Mourning Warbler Stuff";
+                    break;
+                default:
+                    break;
+            }
             Text popup_info = (Text)GameObject.Find("Name").GetComponent<Text>();
             popup_info.text = "Name: " + dio.organisms[index].GetName();
 
@@ -41,8 +61,8 @@ public class MenuScript : MonoBehaviour
             popup_info = (Text)GameObject.Find("In The Scene").GetComponent<Text>();
             popup_info.text = "In the Scene: " + dio.organisms[index].GetInTheScene();
 
-            popup_info = (Text)GameObject.Find("Did You Know").GetComponent<Text>();
-            popup_info.text = "Did You Know?: " + dio.organisms[index].GetDidYouKnow();
+            popup_info = (Text)GameObject.Find("Hows It Doing").GetComponent<Text>();
+            popup_info.text = "Hows it doing?: " + howsItDoingText;
 
             popup_info = (Text)GameObject.Find("Family").GetComponent<Text>();
             popup_info.text = "Family: " + dio.organisms[index].GetFamily();
