@@ -144,7 +144,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2040984695}
-  m_Father: {fileID: 2086756473}
+  m_Father: {fileID: 1726707468}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -446,11 +446,11 @@ RectTransform:
   m_Children:
   - {fileID: 512372480}
   m_Father: {fileID: 2086756473}
-  m_RootOrder: 6
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 190, y: 30}
+  m_AnchoredPosition: {x: 120, y: 30}
   m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &249851808
@@ -751,11 +751,11 @@ RectTransform:
   m_Children:
   - {fileID: 81486649}
   m_Father: {fileID: 2086756473}
-  m_RootOrder: 7
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 415, y: 30}
+  m_AnchoredPosition: {x: 310, y: 30}
   m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &394735918
@@ -1173,8 +1173,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1440310774}
-  m_Father: {fileID: 2086756473}
-  m_RootOrder: 3
+  m_Father: {fileID: 1726707468}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1461,8 +1461,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 754345617}
-  m_Father: {fileID: 2086756473}
-  m_RootOrder: 4
+  m_Father: {fileID: 1726707468}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1730,6 +1730,90 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754345616}
   m_CullTransparentMesh: 0
+--- !u!1 &761719912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 761719913}
+  - component: {fileID: 761719915}
+  - component: {fileID: 761719914}
+  m_Layer: 5
+  m_Name: Side Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &761719913
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761719912}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2086756473}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -123, y: 135}
+  m_SizeDelta: {x: 211, y: 240}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &761719914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761719912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: "This visualization is a re-imagining of the Big Woods Diorama throughout
+    time. The aim of this is to show how the environment in the diorama has changed
+    over time and encourage others to visit the locations found in these dioramas.
+    While our image is from mid-April of this year, it looks quite different from
+    the mid-April image from 2016, as well as the actual diorama\u2019s interpretation
+    of early May in 1940."
+--- !u!222 &761719915
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761719912}
+  m_CullTransparentMesh: 0
 --- !u!1 &792962489
 GameObject:
   m_ObjectHideFlags: 0
@@ -1757,17 +1841,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792962489}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 304671967}
-  m_Father: {fileID: 2086756473}
-  m_RootOrder: 1
+  m_Father: {fileID: 1726707468}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 291.69, y: 161.8}
+  m_AnchoredPosition: {x: 291.69, y: 155.01}
   m_SizeDelta: {x: 60, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &792962491
@@ -2444,11 +2528,11 @@ RectTransform:
   m_Children:
   - {fileID: 557898499}
   m_Father: {fileID: 2086756473}
-  m_RootOrder: 9
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 815, y: 30}
+  m_AnchoredPosition: {x: 690, y: 30}
   m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1469932163
@@ -2690,11 +2774,11 @@ RectTransform:
   m_Children:
   - {fileID: 332387784}
   m_Father: {fileID: 2086756473}
-  m_RootOrder: 8
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 615, y: 30}
+  m_AnchoredPosition: {x: 500, y: 30}
   m_SizeDelta: {x: 80, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1502842268
@@ -3481,14 +3565,19 @@ RectTransform:
   m_GameObject: {fileID: 1726707467}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_LocalScale: {x: 0.85, y: 0.85, z: 1}
+  m_Children:
+  - {fileID: 701792932}
+  - {fileID: 594660173}
+  - {fileID: 22525573}
+  - {fileID: 792962490}
+  - {fileID: 2142850636}
   m_Father: {fileID: 2086756473}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 405, y: 0}
   m_SizeDelta: {x: 900, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1726707469
@@ -3907,15 +3996,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1726707468}
-  - {fileID: 792962490}
-  - {fileID: 22525573}
-  - {fileID: 594660173}
-  - {fileID: 701792932}
-  - {fileID: 2142850636}
   - {fileID: 249851807}
   - {fileID: 394735917}
   - {fileID: 1502842267}
   - {fileID: 1469932162}
+  - {fileID: 761719913}
   m_Father: {fileID: 1888085031}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3997,8 +4082,8 @@ RectTransform:
   - {fileID: 1574156834}
   - {fileID: 986645864}
   - {fileID: 1623964537}
-  m_Father: {fileID: 2086756473}
-  m_RootOrder: 5
+  m_Father: {fileID: 1726707468}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
