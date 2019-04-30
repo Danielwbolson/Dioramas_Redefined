@@ -24,6 +24,8 @@ public class Visualization : MonoBehaviour {
     [SerializeField]
     List<extrapPopDataByRoute> popByRoute;
 
+    Texture2D colormap;
+
     float minLat = 43.5008f;
     float maxLat = 49.3877f;
     float minLong = -97.2304f;
@@ -111,11 +113,15 @@ public class Visualization : MonoBehaviour {
         // Now, we want to change all pixels colors by the data at a specific year at all routes
         // Need a color map
 
-        Color max = Color.blue;
-        Color min = Color.grey * 0.5f;
+        Color max = Color.white;
+        Color min = Color.black;
         Color[] pixels = MNTexture2D.GetPixels();
         Color[] newPixels = new Color[pixels.Length];
+
+        // Current picture data
         int year = 2015;
+        // Ovenbird
+        int birdIndex = 9;
 
         float[] values = new float[popByRoute.Count];
         float[] inverseDistances = new float[popByRoute.Count];
@@ -129,33 +135,44 @@ public class Visualization : MonoBehaviour {
                 continue;
             }
 
+            // Initialize pixel value for our Lerp
             float pixelVal = 0;
 
+            // Getting our inverse distance relationship values
+            // Further away routes have less impact on pixels color
+            int imgWidth = MNTexture2D.width;
+            int imgHeight = MNTexture2D.height;
             for (int k = 0; k < popByRoute.Count; k++) {
-                // i = row * width + column
-                int x = i % MNTexture2D.width;
-                int y = (i - x) / (MNTexture2D.height - 1);
+
+                int px = rData[k].pixelX;
+                int py = rData[k].pixelY;
+                int x = i % imgWidth;
+                int y = (i - x) / (imgWidth - 1);
                 float dist =
-                    (rData[k].pixelX - x) * (rData[k].pixelX - x) +
-                    (rData[k].pixelY - y) * (rData[k].pixelY - y);
+                    (px - x)*(px - x) + (py - y)*(py - y);
 
                 if (dist == 0) {
                     dist = 0.8f;
                 }
-                inverseDistances[k] = (1.0f / dist);
+                inverseDistances[k] = (1.0f / (2*dist));
             }
-
             float totalDist = SumArray(inverseDistances);
 
-            // Inverse relationship. Things further away are less important
+            // Turn these inverseDistances into ratios to multiply by the pixels
+            // Normalize the distances
+            float inverseTotalDist = 1.0f / totalDist;
             for (int k = 0; k < popByRoute.Count; k++) {
-                ratios[k] = inverseDistances[k] / totalDist;
+                ratios[k] = inverseDistances[k] * inverseTotalDist;
             }
 
-            // Going with bird 9, Ovenbird
-            int birdIndex = 9;
-
+            // For each pixel, now go through every route and if it has the desired year,
+            // get the value and multiply by the corresponding ratio
             for (int k = 0; k < popByRoute.Count; k++) {
+                //if (ratios[k] < 0.001f) {
+                //    values[k] = 0.0f;
+                //    continue;
+                //}
+
                 routeData r = rData[k];
 
                 // This will work
@@ -172,38 +189,34 @@ public class Visualization : MonoBehaviour {
                 }
             }
 
-            // At this point, we have the 4 values of our nearest neighbors
             // Need to sum it up and Lerp
             pixelVal = SumArray(values) / popByRoute.Count;
-
-            newPixels[i] = Color.Lerp(min, max, Mathf.Max(0, Mathf.Min(1, pixelVal)));
-
+            newPixels[i] = colormap.GetPixel((int)(pixelVal / colormap.width), 0); //Color.Lerp(min, max, Mathf.Max(0, Mathf.Min(1, pixelVal)));
         }
 
+        // Apply our pixel colors to our textures
         MNTexture2D.SetPixels(newPixels);
         MNTexture2D.Apply();
 
-        //Change pixel color at each route location
+        //// Draw our route locations on our texture as well for debugging
+        //for (int i = 0; i < rData.Count; i++) {
+        //    int x = rData[i].pixelX;
+        //    int y = rData[i].pixelY;
 
-        //width is 0->MNTexture2D.width
-        //height is 0->MNTexture2D.height
-
-        // We need to change:
-        //(minLong, minLat) to(0,0)
-        //(maxLong, maxLat) to(width, height)
-        for (int i = 0; i < rData.Count; i++) {
-            int x = rData[i].pixelX;
-            int y = rData[i].pixelY;
-
-            for (int j = x - 1; j < x + 2; j++) {
-                for (int k = y - 1; k < y + 2; k++) {
-                    MNTexture2D.SetPixel(j, k, Color.black);
-                }
-            }
-        }
-        MNTexture2D.Apply();
+        //    for (int j = x - 1; j < x + 2; j++) {
+        //        for (int k = y - 1; k < y + 2; k++) {
+        //            MNTexture2D.SetPixel(j, k, Color.black);
+        //        }
+        //    }
+        //}
+        //MNTexture2D.Apply();
 
     }
+
+
+    /*
+     * Helper functions
+     */
 
     int ChangeScale_FtoI(int a, int b, float min, float max, float val) {
         return (int)(((b - a) * (val - min)) / (max - min) + a);
