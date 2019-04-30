@@ -29,7 +29,7 @@ public class Organism {
         distribution = distr;
         image = img;
 
-        data = new List<populationDataByYear>();
+        data = new List<yearData>();
     }
 
     public Organism Clone() {
@@ -46,7 +46,7 @@ public class Organism {
                 this.GetImage()
             );
 
-        organism.data = new List<populationDataByYear>();
+        organism.data = new List<yearData>();
         for (int i = 0; i < this.data.Count; i++) {
             organism.data.Add(this.data[i].Clone());
         }
@@ -61,7 +61,7 @@ public class Organism {
     // Variables
     public Classification classification;
     public int aou;
-    public List<populationDataByYear> data;
+    public List<yearData> data;
 
     [SerializeField]
     private string name;
@@ -91,7 +91,7 @@ public class Organism {
     public string GetInTheScene() { return inTheScene; }
     public string GetDidYouKnow() { return didYouKnow; }
     public string GetFamily() { return family; }
-    public List<populationDataByYear> GetPopulationData() { return data; }
+    public List<yearData> GetPopulationData() { return data; }
     public int GetAOU() { return aou; }
     public Texture2D GetDistribution() { return distribution; }
     public Texture2D GetImage() { return image; }

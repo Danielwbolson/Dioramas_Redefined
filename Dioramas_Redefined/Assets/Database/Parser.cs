@@ -145,7 +145,7 @@ public static class Parse {
     public static void ParseBBSData(ref Diorama d, string filepath) {
         string[] fileData = System.IO.File.ReadAllLines(filepath);
 
-        List<populationDataByRoute> routes = new List<populationDataByRoute>();
+        List<routeData> routes = new List<routeData>();
         int index;
 
         // Deep copy of organisms
@@ -168,14 +168,14 @@ public static class Parse {
             for (int j = 0; j < copyOfOrganisms.Count; j++) {
                 currClone.Add(copyOfOrganisms[j].Clone());
             }
-            populationDataByRoute r = new populationDataByRoute {
+            routeData r = new routeData {
                 routeID = routeId,
                 organisms = currClone
             };
 
             // Get our current species info
             int aou = int.Parse(lineData[4]);
-            populationDataByYear p = new populationDataByYear {
+            yearData p = new yearData {
                 year = int.Parse(lineData[3]),
                 numRoutes = 1,
                 count = int.Parse(lineData[5])
@@ -197,7 +197,7 @@ public static class Parse {
                         // The data already existed, so now we increment
                         int totalCounts = p.count + d.organisms[k].data[index].count;
                         int totalRoutes = d.organisms[k].data[index].numRoutes + 1;
-                        d.organisms[k].data[index] = new populationDataByYear {
+                        d.organisms[k].data[index] = new yearData {
                             year = p.year,
                             numRoutes = totalRoutes,
                             count = totalCounts
@@ -229,7 +229,7 @@ public static class Parse {
                     // The data already existed, so now we increment
                     int totalCounts = p.count + o[organismIndex].data[index].count;
                     int totalRoutes = o[organismIndex].data[index].numRoutes + 1;
-                    o[organismIndex].data[index] = new populationDataByYear {
+                    o[organismIndex].data[index] = new yearData {
                         year = p.year,
                         numRoutes = totalRoutes,
                         count = totalCounts
@@ -245,7 +245,7 @@ public static class Parse {
         }
 
         // Sort our birds by year, per route
-        foreach (populationDataByRoute p in routes) {
+        foreach (routeData p in routes) {
             for (int i = 0; i < p.organisms.Count; i++) {
                 p.organisms[i].data.Sort((d1, d2) => d1.year.CompareTo(d2.year));
             }
@@ -254,10 +254,8 @@ public static class Parse {
     }
 
     // Parse our routes and location data into a use able list/struct
-    public static List<routeData> ParseRouteData(string filepath) {
+    public static void ParseRouteData(ref Diorama d, string filepath) {
         string[] fileData = System.IO.File.ReadAllLines(filepath);
-
-        List<routeData> r = new List<routeData>();
 
         // First line is headers
         for (int i = 1; i < fileData.Length; i++) {
@@ -269,15 +267,18 @@ public static class Parse {
             float rLatitude = float.Parse(lineData[4]);
             float rLongitude = float.Parse(lineData[5]);
 
+            // Find our already stored route data
+            int index = d.popByRoute.FindIndex(r => r.routeID.CompareTo(rId) == 0);
+
             routeData route = new routeData {
                 routeID = rId,
+                organisms = d.popByRoute[index].organisms,
                 latitude = rLatitude,
-                longitude = rLongitude
+                longitude = rLongitude,
             };
 
-            r.Add(route);
+            // Update our stored route with the lat/long info
+            d.popByRoute[index] = route;
         }
-
-        return r;
     }
 }

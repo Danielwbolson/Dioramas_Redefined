@@ -12,6 +12,6 @@ public class Diorama : MonoBehaviour {
     public List<Organism> organisms;
 
     [SerializeField]
-    public List<populationDataByRoute> popByRoute;
+    public List<routeData> popByRoute;
 
 }
