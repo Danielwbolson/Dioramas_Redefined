@@ -35,25 +35,25 @@ public class MenuScript : MonoBehaviour
             switch (index)
             {
                 case 9:
-                    howsItDoingText = "Ovenbird Stuff";
+                    howsItDoingText = "The Ovenbird has remained stable over the years. However, Ovenbirds are sensitive to habitat destruction. In addition, the Dutch elm disease affected populations in Minnesota, because when the dying trees let in more light, more vegetation grows on the ground, and Ovenbird numbers decline.";
                     break;
                 case 21:
-                    howsItDoingText = "Blue Hero Stuff";
+                    howsItDoingText = "The Great Blue Heron population has remained stable throughout the years, but has experienced decreases in the past through habitat loss due to chemicals and other human intrusions. Conservation efforts have been made, but newer industrial chemicals continue to affect heron habitats. This leads to reduced nest site attendance.";
                     break;
                 case 22:
-                    howsItDoingText = "Cerulean Warbler Stuff";
+                    howsItDoingText = "The Cerulean Warbler is currently a vulnerable species, with declines of 72% since 1970, with a projected further decline of 50% by 2041. Once abundant near the Mississippi River in the nineteenth century, habitat loss has caused them to stop breeding due to factors such as degrading breeding grounds from human and environmental factors.";
                     break;
                 case 23:
-                    howsItDoingText = "Mourning Warbler Stuff";
+                    howsItDoingText = "The Mourning Warbler population has decreased by around 43% since 1966. Despite this, it is not on a watch list. The Mourning Warbler prefers forests disturbed by human activity, so they are benefiting from activities that are detrimental to other birds.";
                     break;
                 default:
                     break;
             }
             Text popup_info = (Text)GameObject.Find("Name").GetComponent<Text>();
-            popup_info.text = "Name: " + dio.organisms[index].GetName();
+            popup_info.text = dio.organisms[index].GetName();
 
             popup_info = (Text)GameObject.Find("Latin Name").GetComponent<Text>();
-            popup_info.text = "Latin Name: " + dio.organisms[index].GetLatinName();
+            popup_info.text = dio.organisms[index].GetLatinName();
 
             popup_info = (Text)GameObject.Find("Habitat").GetComponent<Text>();
             popup_info.text = "Habitat: " + dio.organisms[index].GetHabitat();
