@@ -136,11 +136,11 @@ public class Visualization : MonoBehaviour {
                 int x = i % MNTexture2D.width;
                 int y = (i - x) / (MNTexture2D.height - 1);
                 float dist =
-                    (rData[k].pixelX - y) * (rData[k].pixelX - y) +
-                    (rData[k].pixelY - x) * (rData[k].pixelY - x);
+                    (rData[k].pixelX - x) * (rData[k].pixelX - x) +
+                    (rData[k].pixelY - y) * (rData[k].pixelY - y);
 
                 if (dist == 0) {
-                    dist = 0.1f;
+                    dist = 0.8f;
                 }
                 inverseDistances[k] = (1.0f / dist);
             }
@@ -192,8 +192,8 @@ public class Visualization : MonoBehaviour {
         //(minLong, minLat) to(0,0)
         //(maxLong, maxLat) to(width, height)
         for (int i = 0; i < rData.Count; i++) {
-            int x = ChangeScale_FtoI(0, MNTexture2D.width - 1, minLong, maxLong, rData[i].longitude);
-            int y = ChangeScale_FtoI(0, MNTexture2D.height - 1, minLat, maxLat, rData[i].latitude);
+            int x = rData[i].pixelX;
+            int y = rData[i].pixelY;
 
             for (int j = x - 1; j < x + 2; j++) {
                 for (int k = y - 1; k < y + 2; k++) {
