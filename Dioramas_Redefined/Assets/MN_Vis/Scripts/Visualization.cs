@@ -24,8 +24,6 @@ public class Visualization : MonoBehaviour {
     [SerializeField]
     List<extrapPopDataByRoute> popByRoute;
 
-    Texture2D colormap;
-
     float minLat = 43.5008f;
     float maxLat = 49.3877f;
     float minLong = -97.2304f;
@@ -37,7 +35,7 @@ public class Visualization : MonoBehaviour {
         popByRoute = new List<extrapPopDataByRoute>();
     }
 
-    public void Visualize(Diorama d, ref Texture2D MNTexture2D) {
+    public void Visualize(Diorama d, ref Texture2D MNTexture2D, Texture2D colormap) {
 
         List<routeData> rData = d.popByRoute;
 
@@ -119,13 +117,38 @@ public class Visualization : MonoBehaviour {
         Color[] newPixels = new Color[pixels.Length];
 
         // Current picture data
-        int year = 2015;
+        int year = 2017;
         // Ovenbird
         int birdIndex = 9;
 
         float[] values = new float[popByRoute.Count];
         float[] inverseDistances = new float[popByRoute.Count];
         float[] ratios = new float[popByRoute.Count];
+
+        List<float> routeCounts = new List<float>();
+        // Get our max value found so that we can normalize our colormap
+        for (int i = 0; i < popByRoute.Count; i++) {
+            routeData r = rData[i];
+
+            // Find the route
+            int index = popByRoute.FindIndex(route => route.routeId.CompareTo(r.routeID) == 0);
+
+            // Find yearly data in this route
+            int yearIndex = popByRoute[index].popByYear[birdIndex].years.IndexOf(year);
+
+            // If it fails, add 0, else add it's pop value
+            if (yearIndex == -1) {
+                routeCounts.Add(0f);
+            } else {
+                routeCounts.Add(popByRoute[index].popByYear[birdIndex].extrapolatedCount[yearIndex]);
+            }
+        }
+        // Get our maxvalue so we can normalize in the future
+        float maxValue = Mathf.Max(routeCounts.ToArray());
+
+        /*
+         * Starting per-pixel calculations
+         */
 
         for (int i = 0; i < pixels.Length; i++) {
 
@@ -152,9 +175,9 @@ public class Visualization : MonoBehaviour {
                     (px - x)*(px - x) + (py - y)*(py - y);
 
                 if (dist == 0) {
-                    dist = 0.8f;
+                    dist = 1f;
                 }
-                inverseDistances[k] = (1.0f / (2*dist));
+                inverseDistances[k] = (1.0f / (dist*dist));
             }
             float totalDist = SumArray(inverseDistances);
 
@@ -165,51 +188,35 @@ public class Visualization : MonoBehaviour {
                 ratios[k] = inverseDistances[k] * inverseTotalDist;
             }
 
-            // For each pixel, now go through every route and if it has the desired year,
-            // get the value and multiply by the corresponding ratio
+            // Multiply our pre-computed route population count data by our ratio for this specific pixel
             for (int k = 0; k < popByRoute.Count; k++) {
-                //if (ratios[k] < 0.001f) {
-                //    values[k] = 0.0f;
-                //    continue;
-                //}
-
-                routeData r = rData[k];
-
-                // This will work
-                int index = popByRoute.FindIndex(route => route.routeId.CompareTo(r.routeID) == 0);
-
-                // This may fail
-                int yearIndex = popByRoute[index].popByYear[birdIndex].years.IndexOf(year);
-
-                // If it fails, add 0, else add it's pop value multiplied by its ratio
-                if (yearIndex == -1) {
+                if (ratios[k] < 0.0001f) {
                     values[k] = 0.0f;
-                } else {
-                    values[k] = (ratios[k] * popByRoute[index].popByYear[birdIndex].extrapolatedCount[yearIndex]);
+                    continue;
                 }
+                values[k] = (ratios[k] * routeCounts[k]);
             }
 
             // Need to sum it up and Lerp
-            pixelVal = SumArray(values) / popByRoute.Count;
-            newPixels[i] = colormap.GetPixel((int)(pixelVal / colormap.width), 0); //Color.Lerp(min, max, Mathf.Max(0, Mathf.Min(1, pixelVal)));
+            pixelVal = Mathf.Max(Mathf.Min(SumArray(values) / maxValue, 1), 0);
+            //newPixels[i] = colormap.GetPixel((colormap.width-1) - (int)(pixelVal * (colormap.width-1)), 0);
+            newPixels[i] = Color.Lerp(Color.black, Color.white, Mathf.Clamp(pixelVal, 0.001f, 0.999f));
         }
 
         // Apply our pixel colors to our textures
         MNTexture2D.SetPixels(newPixels);
         MNTexture2D.Apply();
 
-        //// Draw our route locations on our texture as well for debugging
-        //for (int i = 0; i < rData.Count; i++) {
-        //    int x = rData[i].pixelX;
-        //    int y = rData[i].pixelY;
+        Debug.Log(maxValue);
 
-        //    for (int j = x - 1; j < x + 2; j++) {
-        //        for (int k = y - 1; k < y + 2; k++) {
-        //            MNTexture2D.SetPixel(j, k, Color.black);
-        //        }
-        //    }
-        //}
-        //MNTexture2D.Apply();
+    //    // Draw our route locations on our texture as well for debugging
+    //    for (int i = 0; i < rData.Count; i++) {
+    //        int x = rData[i].pixelX;
+    //        int y = rData[i].pixelY;
+
+    //        MNTexture2D.SetPixel(x, y, Color.black);
+    //    }
+    //    MNTexture2D.Apply();
 
     }
 

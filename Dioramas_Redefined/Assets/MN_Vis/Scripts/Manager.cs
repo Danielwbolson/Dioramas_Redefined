@@ -6,6 +6,7 @@ public class Manager : MonoBehaviour {
 
     public GameObject MNGameObject;
     public Texture2D MNTexture2D;
+    public Texture2D Colormap;
 
     public List<bool> active;
 
@@ -33,7 +34,7 @@ public class Manager : MonoBehaviour {
 
         // Visualize all of our population data
         Visualization visualization = gameObject.AddComponent<Visualization>();
-        visualization.Visualize(diorama, ref MNTexture2D);
+        visualization.Visualize(diorama, ref MNTexture2D, Colormap);
 
         // Set our sprite now
         Rect r = new Rect(0, 0, MNTexture2D.width, MNTexture2D.height);
