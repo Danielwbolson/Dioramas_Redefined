@@ -1,0 +1,67 @@
+﻿BIRDS
+Wood Duck 01440
+White-Crowned Sparrow 05540
+Swainson's Thrush 07580
+Rose-Breasted Grosbeak 05950
+Black-and-White Warbler 06360
+American Redstart 06870
+Ovenbird 06740
+Least Flycatcher 04670
+Tennessee Warbler 06470
+Chestnut-Sided Warbler 06590
+Blackburnian Warbler  06620
+Magnolia Warbler 06570
+Blue-Gray Gnatcatcher 07510
+Blue-Winged Warbler 06410
+Red-Bellied Woodpecker 04090
+
+Pileated Woodpecker 04050
+
+Great Blue Heron 01940
+
+Cerulean Warbler 06580
+
+Mourning Warbler 06790
+
+MAMMALS
+Eastern Chipmunk
+
+INVERTEBRATES
+Mourning Cloak Butterfly
+
+PLANTS
+
+TREES
+Basswood
+Pagoda Dogwood
+Sugar Maple 
+Ironwood
+
+FLOWERS
+Large-Flowered Trillium
+Snow Trillium
+Dwarf Trout Lily
+Nodding Trillium
+White Trout Lily
+Wild Leek
+Jack-in-the-Pulpit
+Canada Lily of the Valley
+Adam-and-Eve Orchid
+Large-Flowered Bellwort
+Large-Flowered Bellwort
+Dutchman’s Breeches
+Sharp-Lobed Hepatica
+Downy Yellow Violet
+Blue Violet
+
+Virginia Bluebells
+
+Wild Ginger
+Bloodroot
+Virginia Waterleaf
+Wild Blue Phlox
+Spring Beauty
+Scarlet Cup
+
+FUNGI
+Black Urn
