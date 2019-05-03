@@ -30,14 +30,17 @@ public class Visualization : MonoBehaviour {
     float maxLong = -89.4919f;
 
     // Start is called before the first frame update
-    public Visualization() {
+    public Visualization() {}
+
+    public Texture2D Visualize(Diorama d, Texture2D MNTexture2D, Texture2D colormap, int birdIndex, int year, int maxCount) {
+
+        // Initialization
         popByYear = new List<extrapPopDataByYear>();
         popByRoute = new List<extrapPopDataByRoute>();
-    }
-
-    public void Visualize(Diorama d, ref Texture2D MNTexture2D, Texture2D colormap) {
 
         List<routeData> rData = d.popByRoute;
+        Texture2D tex = new Texture2D(MNTexture2D.width, MNTexture2D.height);
+        Graphics.CopyTexture(MNTexture2D, tex);
 
         // Get our per-year population data
         foreach (Organism o in d.organisms) {
@@ -92,8 +95,8 @@ public class Visualization : MonoBehaviour {
 
         // Get extrapolated pixel locations of each route
         for (int i = 0; i < rData.Count; i++) {
-            int x = ChangeScale_FtoI(0, MNTexture2D.width - 1, minLong, maxLong, rData[i].longitude);
-            int y = ChangeScale_FtoI(0, MNTexture2D.height - 1, minLat, maxLat, rData[i].latitude);
+            int x = ChangeScale_FtoI(0, tex.width - 1, minLong, maxLong, rData[i].longitude);
+            int y = ChangeScale_FtoI(0, tex.height - 1, minLat, maxLat, rData[i].latitude);
 
             rData[i] = new routeData {
                 routeID = rData[i].routeID,
@@ -113,13 +116,8 @@ public class Visualization : MonoBehaviour {
 
         Color max = Color.white;
         Color min = Color.black;
-        Color[] pixels = MNTexture2D.GetPixels();
+        Color[] pixels = tex.GetPixels();
         Color[] newPixels = new Color[pixels.Length];
-
-        // Current picture data
-        int year = 2017;
-        // Ovenbird
-        int birdIndex = 9;
 
         float[] values = new float[popByRoute.Count];
         float[] inverseDistances = new float[popByRoute.Count];
@@ -143,8 +141,6 @@ public class Visualization : MonoBehaviour {
                 routeCounts.Add(popByRoute[index].popByYear[birdIndex].extrapolatedCount[yearIndex]);
             }
         }
-        // Get our maxvalue so we can normalize in the future
-        float maxValue = Mathf.Max(routeCounts.ToArray());
 
         /*
          * Starting per-pixel calculations
@@ -152,8 +148,9 @@ public class Visualization : MonoBehaviour {
 
         for (int i = 0; i < pixels.Length; i++) {
 
-            // We don't want to edit transparent sections of the image
-            if (pixels[i].a == 0 || (pixels[i].r < 0.1f && pixels[i].g < 0.1f && pixels[i].b < 0.1f)) {
+            // We don't want to edit transparent sections of the image, black, or white
+            if (pixels[i].a == 0 || (pixels[i].r < 0.1f && pixels[i].g < 0.1f && pixels[i].b < 0.1f)
+                || (pixels[i].r > 0.9f && pixels[i].g > 0.9f && pixels[i].b > 0.9f)) {
                 newPixels[i] = pixels[i];
                 continue;
             }
@@ -163,8 +160,8 @@ public class Visualization : MonoBehaviour {
 
             // Getting our inverse distance relationship values
             // Further away routes have less impact on pixels color
-            int imgWidth = MNTexture2D.width;
-            int imgHeight = MNTexture2D.height;
+            int imgWidth = tex.width;
+            int imgHeight = tex.height;
             for (int k = 0; k < popByRoute.Count; k++) {
 
                 int px = rData[k].pixelX;
@@ -198,25 +195,25 @@ public class Visualization : MonoBehaviour {
             }
 
             // Need to sum it up and Lerp
-            pixelVal = Mathf.Max(Mathf.Min(SumArray(values) / maxValue, 1), 0);
-            //newPixels[i] = colormap.GetPixel((colormap.width-1) - (int)(pixelVal * (colormap.width-1)), 0);
-            newPixels[i] = Color.Lerp(Color.black, Color.white, Mathf.Clamp(pixelVal, 0.001f, 0.999f));
+            pixelVal = Mathf.Max(Mathf.Min(SumArray(values) / maxCount, 1), 0);
+            newPixels[i] = colormap.GetPixel((colormap.width-1) - (int)(pixelVal * (colormap.width-1)), 0);
+            //newPixels[i] = Color.Lerp(Color.black, Color.white, Mathf.Clamp(pixelVal, 0.001f, 0.999f));
         }
 
         // Apply our pixel colors to our textures
-        MNTexture2D.SetPixels(newPixels);
-        MNTexture2D.Apply();
+        tex.SetPixels(newPixels);
+        tex.Apply();
 
-        Debug.Log(maxValue);
+        //    // Draw our route locations on our texture as well for debugging
+        //    for (int i = 0; i < rData.Count; i++) {
+        //        int x = rData[i].pixelX;
+        //        int y = rData[i].pixelY;
 
-    //    // Draw our route locations on our texture as well for debugging
-    //    for (int i = 0; i < rData.Count; i++) {
-    //        int x = rData[i].pixelX;
-    //        int y = rData[i].pixelY;
+        //        MNTexture2D.SetPixel(x, y, Color.black);
+        //    }
+        //    MNTexture2D.Apply();
 
-    //        MNTexture2D.SetPixel(x, y, Color.black);
-    //    }
-    //    MNTexture2D.Apply();
+        return tex;
 
     }
 
