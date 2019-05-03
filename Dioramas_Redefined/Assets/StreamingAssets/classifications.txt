@@ -1,27 +1,27 @@
-BIRDS
-Wood Duck 1440
-White-Crowned Sparrow 5540
-Swainson’s Thrush 7580
-Rose-Breasted Grosbeak 5950
-Black-and-White Warbler 6360
-American Redstart 6870
-Ovenbird 6740
-Least Flycatcher 4670
-Tennessee Warbler 6470
-Chestnut-Sided Warbler 6590
-Blackburnian Warbler  6620
-Magnolia Warbler 6570
-Blue-Gray Gnatcatcher 7510
-Blue-Winged Warbler 6410
-Red-Bellied Woodpecker 4090
+﻿BIRDS
+Wood Duck 01440
+White-Crowned Sparrow 05540
+Swainson's Thrush 07580
+Rose-Breasted Grosbeak 05950
+Black-and-White Warbler 06360
+American Redstart 06870
+Ovenbird 06740
+Least Flycatcher 04670
+Tennessee Warbler 06470
+Chestnut-Sided Warbler 06590
+Blackburnian Warbler  06620
+Magnolia Warbler 06570
+Blue-Gray Gnatcatcher 07510
+Blue-Winged Warbler 06410
+Red-Bellied Woodpecker 04090
 
-Pileated Woodpecker
+Pileated Woodpecker 04050
 
-Great Blue Heron 1920
+Great Blue Heron 01940
 
-Cerulean Warbler
+Cerulean Warbler 06580
 
-Mourning Warbler 6790
+Mourning Warbler 06790
 
 MAMMALS
 Eastern Chipmunk
@@ -32,8 +32,8 @@ Mourning Cloak Butterfly
 PLANTS
 
 TREES
-Basswood 2109
-Pagoda Dogwood 617
+Basswood
+Pagoda Dogwood
 Sugar Maple 
 Ironwood
 
