@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4978,6 +4978,7 @@ GameObject:
   - component: {fileID: 1581830755}
   - component: {fileID: 1581830754}
   - component: {fileID: 1581830757}
+  - component: {fileID: 1581830758}
   m_Layer: 5
   m_Name: 360 Button
   m_TagString: Untagged
@@ -5109,6 +5110,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DioPanel: {fileID: 2086756472}
   VizPanel: {fileID: 1260256721}
+--- !u!114 &1581830758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581830752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64349c464459d7f4aaef7bcee1d2e96e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button360: {fileID: 1581830754}
 --- !u!1 &1602399447
 GameObject:
   m_ObjectHideFlags: 0
