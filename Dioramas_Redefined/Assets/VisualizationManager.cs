@@ -16,6 +16,7 @@ public class VisualizationManager : MonoBehaviour
     public Texture2D colorMapTex;
     public Text colorMapMin;
     public Text colorMapMax;
+    public Text lerpImageYear;
 
     int max;
     int currIndex;
@@ -46,6 +47,8 @@ public class VisualizationManager : MonoBehaviour
         for (int i = 0; i < 51; i++) {
             lerpSprites[i] = s;
         }
+
+        lerpImageYear.text = "1967";
     }
 
     public void UpdateImages(Sprite start, Sprite end, Sprite[] sprites, int max) {
@@ -80,6 +83,8 @@ public class VisualizationManager : MonoBehaviour
         Image img = dataImage.GetComponent<Image>();
         img.sprite = lerpSprites[currIndex];
         img.useSpriteMesh = true;
+
+        lerpImageYear.text = "" + s.value;
 
     }
 
